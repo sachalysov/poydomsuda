@@ -1,23 +1,21 @@
 @import "tailwindcss";
 
 :root {
-  --background: #FFFBF2;
-  --foreground: #2D1B00;
-  --primary: #F59E0B;
-  --primary-dark: #D97706;
-  --accent: #FB923C;
-  --muted: #FEF3C7;
-  --card: #FFFDF5;
-  --border: #FDE68A;
+  --bg-base:    #0D0608;
+  --bg-raised:  #160A0D;
+  --bg-card:    #1E0E12;
+  --bg-hover:   #271318;
+  --border:     #3D1820;
+  --border-md:  #5C2530;
+  --text-head:  #FFE4E8;
+  --text-body:  #C8828A;
+  --text-muted: #7A3040;
+  --accent:     #E11D48;
+  --accent-hov: #F43F5E;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-primary: var(--primary);
-  --color-accent: var(--accent);
   --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
 * {
@@ -29,35 +27,30 @@ html {
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--bg-base);
+  color: var(--text-body);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0);    }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  0%, 100% { transform: translateY(0px);   }
+  50%       { transform: translateY(-10px); }
 }
 
-.animate-fade-in-up {
-  animation: fadeInUp 0.6s ease-out forwards;
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px 4px rgba(225,29,72,0.20); }
+  50%       { box-shadow: 0 0 40px 10px rgba(225,29,72,0.35); }
 }
 
-.animate-float {
-  animation: float 4s ease-in-out infinite;
-}
+.animate-fade-in-up { animation: fadeInUp 0.6s ease-out forwards; }
+.animate-float      { animation: float 4s ease-in-out infinite;   }
+.animate-glow       { animation: glow-pulse 3s ease-in-out infinite; }
 
 .delay-100 { animation-delay: 0.1s; }
 .delay-200 { animation-delay: 0.2s; }

@@ -57,7 +57,6 @@ export default function ChatInterface() {
           { id: (Date.now() + 1).toString(), role: "assistant", text: botText },
         ]);
       } else {
-        // Заглушка до подключения вебхука
         await new Promise((r) => setTimeout(r, 800));
         setMessages((prev) => [
           ...prev,
@@ -99,21 +98,21 @@ export default function ChatInterface() {
             className={`flex gap-3 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
           >
             {msg.role === "assistant" && (
-              <div className="w-8 h-8 rounded-full bg-amber-400 flex items-center justify-center text-sm flex-shrink-0 mt-1">
-                ☀️
+              <div className="w-8 h-8 rounded-full bg-rose-600/20 border border-rose-500/30 flex items-center justify-center text-sm flex-shrink-0 mt-1">
+                🌆
               </div>
             )}
             <div
               className={`max-w-[80%] px-4 py-3 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${
                 msg.role === "user"
-                  ? "bg-amber-400 text-amber-900 rounded-br-sm font-medium"
-                  : "bg-white border border-amber-100 text-amber-800 rounded-bl-sm shadow-sm"
+                  ? "bg-rose-600 text-white rounded-br-sm font-medium"
+                  : "bg-[#160A0D] border border-[#3D1820] text-[#C8828A] rounded-bl-sm"
               }`}
             >
               {msg.text}
             </div>
             {msg.role === "user" && (
-              <div className="w-8 h-8 rounded-full bg-orange-200 flex items-center justify-center text-sm flex-shrink-0 mt-1">
+              <div className="w-8 h-8 rounded-full bg-[#1E0E12] border border-[#3D1820] flex items-center justify-center text-sm flex-shrink-0 mt-1">
                 👤
               </div>
             )}
@@ -122,15 +121,15 @@ export default function ChatInterface() {
 
         {loading && (
           <div className="flex gap-3 justify-start">
-            <div className="w-8 h-8 rounded-full bg-amber-400 flex items-center justify-center text-sm flex-shrink-0 mt-1">
-              ☀️
+            <div className="w-8 h-8 rounded-full bg-rose-600/20 border border-rose-500/30 flex items-center justify-center text-sm flex-shrink-0 mt-1">
+              🌆
             </div>
-            <div className="bg-white border border-amber-100 px-4 py-3 rounded-2xl rounded-bl-sm shadow-sm">
+            <div className="bg-[#160A0D] border border-[#3D1820] px-4 py-3 rounded-2xl rounded-bl-sm">
               <div className="flex gap-1.5 items-center h-5">
                 {[0, 1, 2].map((i) => (
                   <span
                     key={i}
-                    className="w-2 h-2 bg-amber-400 rounded-full animate-bounce"
+                    className="w-2 h-2 bg-rose-500 rounded-full animate-bounce"
                     style={{ animationDelay: `${i * 0.15}s` }}
                   />
                 ))}
@@ -148,7 +147,7 @@ export default function ChatInterface() {
             <button
               key={s}
               onClick={() => sendMessage(s)}
-              className="text-xs bg-amber-50 border border-amber-200 text-amber-700 px-3 py-2 rounded-full hover:bg-amber-100 hover:border-amber-400 transition-colors"
+              className="text-xs bg-[#160A0D] border border-[#3D1820] text-[#C8828A] px-3 py-2 rounded-full hover:border-[#5C2530] hover:text-rose-300 transition-colors"
             >
               {s}
             </button>
@@ -157,7 +156,7 @@ export default function ChatInterface() {
       )}
 
       {/* Input */}
-      <div className="bg-white border border-amber-200 rounded-2xl shadow-sm focus-within:border-amber-400 focus-within:shadow-amber-100 focus-within:shadow-md transition-all duration-200">
+      <div className="bg-[#160A0D] border border-[#3D1820] rounded-2xl focus-within:border-rose-700/60 transition-all duration-200">
         <textarea
           ref={inputRef}
           value={input}
@@ -165,14 +164,14 @@ export default function ChatInterface() {
           onKeyDown={handleKeyDown}
           placeholder="Напишите что ищете... (Enter для отправки)"
           rows={2}
-          className="w-full px-4 pt-4 pb-2 text-sm text-amber-900 placeholder:text-amber-400 bg-transparent resize-none outline-none"
+          className="w-full px-4 pt-4 pb-2 text-sm text-rose-100 placeholder:text-[#7A3040] bg-transparent resize-none outline-none"
         />
         <div className="flex items-center justify-between px-4 pb-3">
-          <span className="text-xs text-amber-400">Shift+Enter для переноса строки</span>
+          <span className="text-xs text-[#7A3040]">Shift+Enter для переноса строки</span>
           <button
             onClick={() => sendMessage(input)}
             disabled={!input.trim() || loading}
-            className="inline-flex items-center gap-1.5 bg-amber-400 hover:bg-amber-500 disabled:opacity-40 disabled:cursor-not-allowed text-amber-900 font-semibold text-sm px-5 py-2 rounded-xl transition-all duration-200"
+            className="inline-flex items-center gap-1.5 bg-rose-600 hover:bg-rose-500 disabled:opacity-30 disabled:cursor-not-allowed text-white font-semibold text-sm px-5 py-2 rounded-xl transition-all duration-200"
           >
             <span>Отправить</span>
             <span>→</span>

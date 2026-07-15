@@ -16,20 +16,16 @@ export const metadata: Metadata = {
   },
   description:
     "Сервис для поиска идей досуга в Санкт-Петербурге. Спросите AI-помощника куда сходить, что посетить и как интересно провести время в городе.",
-  alternates: {
-    canonical: "https://poydomsuda.ru",
-  },
+  alternates: { canonical: "https://poydomsuda.ru" },
   robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ru" className={`${geist.variable} h-full`}>
-      <body className="min-h-full flex flex-col bg-[#FFFBF2] text-[#2D1B00] antialiased">
+      <body className="min-h-full flex flex-col bg-[#0D0608] text-[#C8828A] antialiased">
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
