@@ -54,15 +54,15 @@ export default function HomePage() {
   return (
     <>
       {/* ── Hero ── */}
-      <section className="relative overflow-hidden bg-[#0D0608] pt-16 pb-24 sm:pt-24 sm:pb-32">
-        {/* Background image */}
+      <section className="relative -mt-16 overflow-hidden bg-[#0D0608] pt-32 pb-24 sm:pt-40 sm:pb-32">
+        {/* Background image — extends under sticky header */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: "url('/spb-hero.png')" }}
         />
         {/* Dark overlay to keep text readable */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#0D0608]/95 via-[#0D0608]/80 to-[#0D0608]/50" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0D0608]/80 via-transparent to-[#0D0608]/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0D0608]/80 via-transparent to-[#0D0608]/15" />
 
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
           <div className="inline-flex items-center gap-2 bg-rose-600/10 border border-rose-500/20 text-rose-400 text-sm font-medium px-4 py-1.5 rounded-full mb-6 animate-fade-in-up">

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const navLinks = [
   { href: "/", label: "Главная" },
@@ -13,9 +13,23 @@ const navLinks = [
 export default function Header() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 16);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 bg-[#0D0608]/95 backdrop-blur-md border-b border-[#3D1820]">
+    <header
+      className={`sticky top-0 z-50 border-b border-[#3D1820]/60 transition-[background-color,backdrop-filter] duration-300 ${
+        scrolled
+          ? "bg-[#0D0608]/40 backdrop-blur-md"
+          : "bg-[#0D0608]/50 backdrop-blur-md"
+      }`}
+    >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
 
