@@ -59,7 +59,7 @@ export default function HomePage() {
         <div className="absolute -bottom-12 -left-20 w-96 h-96 bg-red-900/15 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[280px] bg-rose-800/8 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
           <div className="inline-flex items-center gap-2 bg-rose-600/10 border border-rose-500/20 text-rose-400 text-sm font-medium px-4 py-1.5 rounded-full mb-6 animate-fade-in-up">
             <span>📍</span> Санкт-Петербург
           </div>
@@ -69,12 +69,12 @@ export default function HomePage() {
             <span className="text-rose-400">сходить сегодня</span>
           </h1>
 
-          <p className="text-lg sm:text-xl text-[#C8828A] max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-up delay-200">
+          <p className="text-lg sm:text-xl text-[#C8828A] max-w-2xl mb-10 leading-relaxed animate-fade-in-up delay-200">
             Сервис для поиска досуга в Петербурге. Пообщайтесь с AI-помощником, который подберёт
             лучшие места, маршруты и события — специально для вас.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up delay-300">
+          <div className="flex flex-col sm:flex-row items-start justify-start gap-4 animate-fade-in-up delay-300">
             <Link
               href="/chat"
               className="inline-flex items-center gap-2 bg-rose-600 hover:bg-rose-500 text-white font-bold text-lg px-8 py-4 rounded-2xl shadow-xl shadow-rose-900/50 transition-all duration-200 hover:-translate-y-0.5 w-full sm:w-auto justify-center animate-glow"
@@ -90,13 +90,13 @@ export default function HomePage() {
           </div>
 
           {/* Stats */}
-          <div className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-16 animate-fade-in-up delay-400">
+          <div className="mt-16 flex flex-col sm:flex-row items-start justify-start gap-8 sm:gap-16 animate-fade-in-up delay-400">
             {[
               { value: "500+", label: "мест в базе" },
               { value: "24/7", label: "AI на связи" },
               { value: "100%", label: "про Петербург" },
             ].map(({ value, label }) => (
-              <div key={label} className="text-center">
+              <div key={label} className="text-left">
                 <div className="text-3xl font-bold text-rose-400">{value}</div>
                 <div className="text-sm text-[#7A3040] mt-1">{label}</div>
               </div>
