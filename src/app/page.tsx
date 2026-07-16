@@ -56,7 +56,7 @@ export default function HomePage() {
         />
         {/* Dark overlay to keep text readable */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#0D0608]/95 via-[#0D0608]/80 to-[#0D0608]/50" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0D0608]/80 via-transparent to-[#0D0608]/15" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,#0D0608_0%,transparent_18%,transparent_82%,#0D0608_100%)]" />
 
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
           <div className="inline-flex items-center gap-2 bg-rose-600/10 border border-rose-500/20 text-rose-400 text-sm font-medium px-4 py-1.5 rounded-full mb-6 animate-fade-in-up">
@@ -103,8 +103,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      <div className="h-px bg-gradient-to-r from-transparent via-[#3D1820] to-transparent" />
 
       {/* ── Features ── */}
       <section className="py-20 bg-[#0D0608]">
@@ -218,12 +216,13 @@ export default function HomePage() {
       </section>
 
       {/* ── CTA Banner ── */}
-      <section className="relative overflow-hidden py-20 border-t border-[#3D1820]">
+      <section className="relative overflow-hidden py-20">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: "url('/spb-cta.png')" }}
         />
         <div className="absolute inset-0 bg-black/70" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,#0D0608_0%,transparent_18%,transparent_82%,#0A0507_100%)]" />
 
         <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-rose-100 mb-4">
