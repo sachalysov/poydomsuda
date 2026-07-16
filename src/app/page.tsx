@@ -87,20 +87,6 @@ export default function HomePage() {
               Читать блог
             </Link>
           </div>
-
-          {/* Stats */}
-          <div className="mt-16 flex flex-col sm:flex-row items-start justify-start gap-8 sm:gap-16 animate-fade-in-up delay-400">
-            {[
-              { value: "500+", label: "мест в базе" },
-              { value: "24/7", label: "AI на связи" },
-              { value: "100%", label: "про Петербург" },
-            ].map(({ value, label }) => (
-              <div key={label} className="text-left">
-                <div className="text-3xl font-bold text-rose-400">{value}</div>
-                <div className="text-sm text-[#7A3040] mt-1">{label}</div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
