@@ -24,7 +24,7 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b border-[#3D1820]/30 transition-[background-color,backdrop-filter] duration-300 ${
+      className={`sticky top-0 z-50 relative transition-[background-color,backdrop-filter] duration-300 ${
         scrolled
           ? "bg-[#0D0608]/20 backdrop-blur-md"
           : "bg-[#0D0608]/15 backdrop-blur-sm"
@@ -32,7 +32,6 @@ export default function Header() {
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
             <span className="font-bold text-xl text-rose-200 group-hover:text-rose-100 transition-colors">
@@ -108,6 +107,12 @@ export default function Header() {
           </nav>
         )}
       </div>
+
+      {/* Soft fade into page content */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-full h-10 bg-gradient-to-b from-[#0D0608]/40 via-[#0D0608]/15 to-transparent"
+      />
     </header>
   );
 }
