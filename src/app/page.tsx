@@ -55,9 +55,14 @@ export default function HomePage() {
     <>
       {/* ── Hero ── */}
       <section className="relative overflow-hidden bg-[#0D0608] pt-16 pb-24 sm:pt-24 sm:pb-32">
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-rose-900/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-12 -left-20 w-96 h-96 bg-red-900/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[280px] bg-rose-800/8 rounded-full blur-3xl pointer-events-none" />
+        {/* Background image */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/spb-hero.png')" }}
+        />
+        {/* Dark overlay to keep text readable */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0D0608]/95 via-[#0D0608]/80 to-[#0D0608]/50" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0D0608]/80 via-transparent to-[#0D0608]/40" />
 
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
           <div className="inline-flex items-center gap-2 bg-rose-600/10 border border-rose-500/20 text-rose-400 text-sm font-medium px-4 py-1.5 rounded-full mb-6 animate-fade-in-up">
