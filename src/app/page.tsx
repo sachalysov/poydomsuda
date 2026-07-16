@@ -11,17 +11,14 @@ export const metadata: Metadata = {
 
 const features = [
   {
-    emoji: "🤖",
     title: "AI-помощник",
     desc: "Опишите своё настроение, бюджет и компанию — и получите персональные рекомендации за секунды.",
   },
   {
-    emoji: "📰",
     title: "Блог о досуге",
     desc: "Редакционные статьи о лучших местах, маршрутах и событиях города — от музеев до уличных фестивалей.",
   },
   {
-    emoji: "📍",
     title: "Только Петербург",
     desc: "Фокусируемся на одном городе, чтобы давать актуальные и точные советы без воды.",
   },
@@ -30,19 +27,16 @@ const features = [
 const howItWorks = [
   {
     step: "1",
-    emoji: "💬",
     title: "Напишите AI-помощнику",
     desc: "Расскажите, что ищете: «Хочу погулять с детьми», «Ищу ресторан для свидания», «Что поделать в дождь».",
   },
   {
     step: "2",
-    emoji: "✨",
     title: "Получите рекомендации",
     desc: "Помощник подберёт места, события и маршруты с учётом вашего настроения, бюджета и компании.",
   },
   {
     step: "3",
-    emoji: "🗺️",
     title: "Отправляйтесь",
     desc: "Сохраните идеи, изучите адреса — и вперёд навстречу новым впечатлениям по городу на Неве.",
   },
@@ -66,7 +60,7 @@ export default function HomePage() {
 
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
           <div className="inline-flex items-center gap-2 bg-rose-600/10 border border-rose-500/20 text-rose-400 text-sm font-medium px-4 py-1.5 rounded-full mb-6 animate-fade-in-up">
-            <span>📍</span> Санкт-Петербург
+            Санкт-Петербург
           </div>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-rose-100 leading-tight mb-6 animate-fade-in-up delay-100">
@@ -84,13 +78,13 @@ export default function HomePage() {
               href="/chat"
               className="inline-flex items-center gap-2 bg-rose-600 hover:bg-rose-500 text-white font-bold text-lg px-8 py-4 rounded-2xl shadow-xl shadow-rose-900/50 transition-all duration-200 hover:-translate-y-0.5 w-full sm:w-auto justify-center animate-glow"
             >
-              <span>💬</span> Спросить AI-помощника
+              Спросить AI-помощника
             </Link>
             <Link
               href="/blog"
               className="inline-flex items-center gap-2 bg-transparent hover:bg-[#1E0E12] text-rose-300 font-semibold text-lg px-8 py-4 rounded-2xl border border-[#5C2530] hover:border-rose-600 transition-all duration-200 w-full sm:w-auto justify-center"
             >
-              <span>📰</span> Читать блог
+              Читать блог
             </Link>
           </div>
 
@@ -122,14 +116,11 @@ export default function HomePage() {
             Всё необходимое для того, чтобы каждые выходные в Петербурге были запоминающимися
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {features.map(({ emoji, title, desc }) => (
+            {features.map(({ title, desc }) => (
               <div
                 key={title}
                 className="bg-[#160A0D] border border-[#3D1820] hover:border-[#5C2530] rounded-2xl p-6 transition-all duration-200 group hover:bg-[#1E0E12]"
               >
-                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-200">
-                  {emoji}
-                </div>
                 <h3 className="text-lg font-bold text-rose-200 mb-2">{title}</h3>
                 <p className="text-[#C8828A] text-sm leading-relaxed">{desc}</p>
               </div>
@@ -150,12 +141,11 @@ export default function HomePage() {
             Три шага до идеального досуга в городе
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            {howItWorks.map(({ step, emoji, title, desc }) => (
+            {howItWorks.map(({ step, title, desc }) => (
               <div key={step} className="relative text-center">
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-rose-600 text-white font-bold text-lg rounded-full mb-4 shadow-lg shadow-rose-900/60">
                   {step}
                 </div>
-                <div className="text-4xl mb-3">{emoji}</div>
                 <h3 className="text-lg font-bold text-rose-200 mb-2">{title}</h3>
                 <p className="text-[#C8828A] text-sm leading-relaxed max-w-xs mx-auto">{desc}</p>
               </div>
@@ -167,7 +157,7 @@ export default function HomePage() {
               href="/chat"
               className="inline-flex items-center gap-2 bg-rose-600 hover:bg-rose-500 text-white font-bold px-8 py-4 rounded-2xl shadow-lg shadow-rose-900/50 transition-all duration-200 hover:-translate-y-0.5"
             >
-              <span>🚀</span> Попробовать бесплатно
+              Попробовать бесплатно
             </Link>
           </div>
         </div>
@@ -198,7 +188,6 @@ export default function HomePage() {
                 href={`/blog/${post.slug}`}
                 className="group bg-[#160A0D] border border-[#3D1820] hover:border-[#5C2530] rounded-2xl p-5 transition-all duration-200 hover:bg-[#1E0E12]"
               >
-                <div className="text-4xl mb-3">{post.emoji}</div>
                 <span className="inline-block text-xs font-medium bg-rose-600/10 border border-rose-500/20 text-rose-400 px-2.5 py-1 rounded-full mb-3">
                   {post.category}
                 </span>
@@ -228,7 +217,6 @@ export default function HomePage() {
       {/* ── CTA Banner ── */}
       <section className="py-20 bg-gradient-to-br from-[#1A060C] via-[#200B12] to-[#1A060C] border-t border-[#3D1820]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="text-5xl mb-4 animate-float">🌆</div>
           <h2 className="text-3xl sm:text-4xl font-bold text-rose-100 mb-4">
             Петербург ждёт вас
           </h2>
@@ -239,7 +227,7 @@ export default function HomePage() {
             href="/chat"
             className="inline-flex items-center gap-2 bg-rose-600 hover:bg-rose-500 text-white font-bold text-lg px-10 py-4 rounded-2xl shadow-xl shadow-rose-900/50 transition-all duration-200 hover:-translate-y-0.5 animate-glow"
           >
-            <span>💬</span> Начать разговор
+            Начать разговор
           </Link>
         </div>
       </section>

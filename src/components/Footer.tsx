@@ -8,8 +8,7 @@ export default function Footer() {
 
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-2xl">🌆</span>
+            <div className="mb-3">
               <span className="font-bold text-lg text-rose-200">Пойдём Сюда</span>
             </div>
             <p className="text-sm text-[#7A3040] leading-relaxed">
@@ -38,8 +37,8 @@ export default function Footer() {
           {/* City */}
           <div>
             <h3 className="font-semibold text-rose-400 mb-4 text-sm uppercase tracking-wider">Город</h3>
-            <p className="text-sm text-[#C8828A] flex items-center gap-2">
-              <span>📍</span> Санкт-Петербург, Россия
+            <p className="text-sm text-[#C8828A]">
+              Санкт-Петербург, Россия
             </p>
             <p className="text-xs text-[#7A3040] mt-5">
               © {new Date().getFullYear()} Пойдём Сюда. Все права защищены.

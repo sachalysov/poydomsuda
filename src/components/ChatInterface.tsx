@@ -20,7 +20,7 @@ const suggestions = [
 const WEBHOOK_URL = ""; // Подключите ваш вебхук здесь
 
 const botPlaceholder =
-  "Привет! 👋 Я помогу найти идеальный досуг в Санкт-Петербурге. Расскажите — с кем идёте, какой у вас бюджет и что вам нравится? Или выберите один из вариантов ниже.";
+  "Привет! Я помогу найти идеальный досуг в Санкт-Петербурге. Расскажите — с кем идёте, какой у вас бюджет и что вам нравится? Или выберите один из вариантов ниже.";
 
 export default function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([
@@ -63,7 +63,7 @@ export default function ChatInterface() {
           {
             id: (Date.now() + 1).toString(),
             role: "assistant",
-            text: `Отличный вопрос! 🌟 Я получил ваше сообщение: «${text.trim()}». \n\nПока вебхук с нейросетью не подключён — но скоро я смогу давать полноценные персональные рекомендации по досугу в Санкт-Петербурге. Пока загляните в наш блог — там много интересных идей! 👇`,
+            text: `Отличный вопрос! Я получил ваше сообщение: «${text.trim()}». \n\nПока вебхук с нейросетью не подключён — но скоро я смогу давать полноценные персональные рекомендации по досугу в Санкт-Петербурге. Пока загляните в наш блог — там много интересных идей.`,
           },
         ]);
       }
@@ -73,7 +73,7 @@ export default function ChatInterface() {
         {
           id: (Date.now() + 1).toString(),
           role: "assistant",
-          text: "Упс, что-то пошло не так. Попробуйте ещё раз чуть позже! 🙏",
+          text: "Упс, что-то пошло не так. Попробуйте ещё раз чуть позже!",
         },
       ]);
     } finally {
@@ -98,8 +98,8 @@ export default function ChatInterface() {
             className={`flex gap-3 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
           >
             {msg.role === "assistant" && (
-              <div className="w-8 h-8 rounded-full bg-rose-600/20 border border-rose-500/30 flex items-center justify-center text-sm flex-shrink-0 mt-1">
-                🌆
+              <div className="w-8 h-8 rounded-full bg-rose-600/20 border border-rose-500/30 flex items-center justify-center text-xs font-semibold text-rose-400 flex-shrink-0 mt-1">
+                AI
               </div>
             )}
             <div
@@ -112,8 +112,8 @@ export default function ChatInterface() {
               {msg.text}
             </div>
             {msg.role === "user" && (
-              <div className="w-8 h-8 rounded-full bg-[#1E0E12] border border-[#3D1820] flex items-center justify-center text-sm flex-shrink-0 mt-1">
-                👤
+              <div className="w-8 h-8 rounded-full bg-[#1E0E12] border border-[#3D1820] flex items-center justify-center text-xs font-semibold text-[#C8828A] flex-shrink-0 mt-1">
+                Вы
               </div>
             )}
           </div>
@@ -121,8 +121,8 @@ export default function ChatInterface() {
 
         {loading && (
           <div className="flex gap-3 justify-start">
-            <div className="w-8 h-8 rounded-full bg-rose-600/20 border border-rose-500/30 flex items-center justify-center text-sm flex-shrink-0 mt-1">
-              🌆
+            <div className="w-8 h-8 rounded-full bg-rose-600/20 border border-rose-500/30 flex items-center justify-center text-xs font-semibold text-rose-400 flex-shrink-0 mt-1">
+              AI
             </div>
             <div className="bg-[#160A0D] border border-[#3D1820] px-4 py-3 rounded-2xl rounded-bl-sm">
               <div className="flex gap-1.5 items-center h-5">

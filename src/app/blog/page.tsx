@@ -21,7 +21,7 @@ export default function BlogPage() {
       <section className="bg-[#0A0507] border-b border-[#3D1820] py-14 sm:py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center gap-2 bg-rose-600/10 border border-rose-500/20 text-rose-400 text-sm font-medium px-4 py-1.5 rounded-full mb-5">
-            <span>📰</span> Блог о досуге
+            Блог о досуге
           </div>
           <h1 className="text-4xl sm:text-5xl font-bold text-rose-100 mb-4">
             Идеи для Петербурга
@@ -60,7 +60,6 @@ export default function BlogPage() {
             className="group block bg-[#160A0D] border border-[#3D1820] hover:border-[#5C2530] rounded-3xl p-6 sm:p-8 transition-all duration-300 mb-8 hover:bg-[#1E0E12]"
           >
             <div className="flex flex-col sm:flex-row gap-6 items-start">
-              <div className="text-6xl sm:text-7xl flex-shrink-0">{posts[0].emoji}</div>
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-3">
                   <span className="inline-block text-xs font-medium bg-rose-600/10 border border-rose-500/20 text-rose-400 px-2.5 py-1 rounded-full">
@@ -94,7 +93,6 @@ export default function BlogPage() {
               href={`/blog/${post.slug}`}
               className="group bg-[#160A0D] border border-[#3D1820] hover:border-[#5C2530] rounded-2xl p-5 transition-all duration-200 flex flex-col hover:bg-[#1E0E12]"
             >
-              <div className="text-4xl mb-3">{post.emoji}</div>
               <span className="inline-block text-xs font-medium bg-rose-600/10 border border-rose-500/20 text-rose-400 px-2.5 py-1 rounded-full mb-3 self-start">
                 {post.category}
               </span>
@@ -124,7 +122,7 @@ export default function BlogPage() {
             href="/chat"
             className="inline-flex items-center gap-2 bg-rose-600 hover:bg-rose-500 text-white font-bold px-8 py-4 rounded-2xl shadow-lg shadow-rose-900/50 transition-all duration-200 hover:-translate-y-0.5"
           >
-            <span>💬</span> Открыть чат с AI
+            Открыть чат с AI
           </Link>
         </div>
       </section>

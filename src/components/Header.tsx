@@ -35,7 +35,6 @@ export default function Header() {
 
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
-            <span className="text-2xl animate-float">🌆</span>
             <span className="font-bold text-xl text-rose-200 group-hover:text-rose-100 transition-colors">
               Пойдём Сюда
             </span>
@@ -63,7 +62,7 @@ export default function Header() {
             href="/chat"
             className="hidden md:inline-flex items-center gap-2 bg-rose-600 hover:bg-rose-500 text-white font-semibold text-sm px-5 py-2.5 rounded-full transition-all duration-200 shadow-lg shadow-rose-900/50"
           >
-            <span>💬</span> Найти досуг
+            Найти досуг
           </Link>
 
           {/* Mobile burger */}
@@ -104,7 +103,7 @@ export default function Header() {
               onClick={() => setMenuOpen(false)}
               className="mt-2 inline-flex items-center justify-center gap-2 bg-rose-600 hover:bg-rose-500 text-white font-semibold text-sm px-5 py-3 rounded-xl transition-colors"
             >
-              <span>💬</span> Найти досуг
+              Найти досуг
             </Link>
           </nav>
         )}

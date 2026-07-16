@@ -15,7 +15,7 @@ export default function ChatPage() {
       <section className="bg-[#0A0507] border-b border-[#3D1820] py-10 sm:py-14">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center gap-2 bg-rose-600/10 border border-rose-500/20 text-rose-400 text-sm font-medium px-4 py-1.5 rounded-full mb-4">
-            <span>🤖</span> AI-помощник
+            AI-помощник
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-rose-100 mb-3">
             Куда пойти сегодня?

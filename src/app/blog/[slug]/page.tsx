@@ -71,7 +71,6 @@ export default async function PostPage({ params }: Props) {
 
       {/* Article header */}
       <header className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-6">
-        <div className="text-6xl mb-5">{post.emoji}</div>
         <div className="flex flex-wrap items-center gap-3 mb-5">
           <span className="inline-block text-sm font-medium bg-rose-600/10 border border-rose-500/20 text-rose-400 px-3 py-1 rounded-full">
             {post.category}
@@ -100,7 +99,6 @@ export default async function PostPage({ params }: Props) {
       {/* Ask AI CTA */}
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
         <div className="bg-[#160A0D] border border-[#5C2530] rounded-2xl p-6 sm:p-8 text-center">
-          <div className="text-3xl mb-3">💬</div>
           <h3 className="text-xl font-bold text-rose-200 mb-2">
             Хотите персональный совет?
           </h3>
@@ -111,7 +109,7 @@ export default async function PostPage({ params }: Props) {
             href="/chat"
             className="inline-flex items-center gap-2 bg-rose-600 hover:bg-rose-500 text-white font-bold px-6 py-3 rounded-xl transition-all duration-200 hover:-translate-y-0.5"
           >
-            <span>🚀</span> Открыть чат
+            Открыть чат
           </Link>
         </div>
       </div>
@@ -128,7 +126,6 @@ export default async function PostPage({ params }: Props) {
                   href={`/blog/${p.slug}`}
                   className="group bg-[#160A0D] border border-[#3D1820] hover:border-[#5C2530] rounded-2xl p-5 transition-all duration-200 hover:bg-[#1E0E12]"
                 >
-                  <div className="text-3xl mb-3">{p.emoji}</div>
                   <span className="inline-block text-xs font-medium bg-rose-600/10 border border-rose-500/20 text-rose-400 px-2.5 py-1 rounded-full mb-3">
                     {p.category}
                   </span>
