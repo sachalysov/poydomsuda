@@ -129,15 +129,20 @@ export default function HomePage() {
         </div>
       </section>
 
-      <div className="h-px bg-gradient-to-r from-transparent via-[#3D1820] to-transparent" />
-
       {/* ── How it works ── */}
-      <section className="py-20 bg-[#0A0507]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden py-20 bg-[#0A0507]">
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/spb-how-it-works.png')" }}
+        />
+        <div className="absolute inset-0 bg-[#0A0507]/75" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,#0A0507_0%,transparent_18%,transparent_82%,#0A0507_100%)]" />
+
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl sm:text-4xl font-bold text-rose-100 text-center mb-3">
             Как это работает
           </h2>
-          <p className="text-[#7A3040] text-center mb-14 max-w-lg mx-auto">
+          <p className="text-[#C8828A] text-center mb-14 max-w-lg mx-auto">
             Три шага до идеального досуга в городе
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
@@ -162,8 +167,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      <div className="h-px bg-gradient-to-r from-transparent via-[#3D1820] to-transparent" />
 
       {/* ── Latest posts ── */}
       <section className="py-20 bg-[#0D0608]">
@@ -215,8 +218,14 @@ export default function HomePage() {
       </section>
 
       {/* ── CTA Banner ── */}
-      <section className="py-20 bg-gradient-to-br from-[#1A060C] via-[#200B12] to-[#1A060C] border-t border-[#3D1820]">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="relative overflow-hidden py-20 border-t border-[#3D1820]">
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/spb-cta.png')" }}
+        />
+        <div className="absolute inset-0 bg-black/70" />
+
+        <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-rose-100 mb-4">
             Петербург ждёт вас
           </h2>
