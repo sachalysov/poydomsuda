@@ -24,10 +24,10 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b border-[#3D1820]/60 transition-[background-color,backdrop-filter] duration-300 ${
+      className={`sticky top-0 z-50 border-b border-[#3D1820]/30 transition-[background-color,backdrop-filter] duration-300 ${
         scrolled
-          ? "bg-[#0D0608]/40 backdrop-blur-md"
-          : "bg-[#0D0608]/50 backdrop-blur-md"
+          ? "bg-[#0D0608]/20 backdrop-blur-md"
+          : "bg-[#0D0608]/15 backdrop-blur-sm"
       }`}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
