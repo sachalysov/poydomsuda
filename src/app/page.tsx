@@ -201,30 +201,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── CTA Banner ── */}
-      <section className="relative overflow-hidden py-20">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/spb-cta.png')" }}
-        />
-        <div className="absolute inset-0 bg-black/70" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,#0D0608_0%,transparent_18%,transparent_82%,#0A0507_100%)]" />
-
-        <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-rose-100 mb-4">
-            Петербург ждёт вас
-          </h2>
-          <p className="text-[#C8828A] mb-8 text-lg max-w-xl mx-auto">
-            Спросите AI-помощника прямо сейчас — и узнайте, куда пойти сегодня вечером.
-          </p>
-          <Link
-            href="/chat"
-            className="inline-flex items-center gap-2 bg-rose-600 hover:bg-rose-500 text-white font-bold text-lg px-10 py-4 rounded-2xl shadow-xl shadow-rose-900/50 transition-all duration-200 hover:-translate-y-0.5 animate-glow"
-          >
-            Начать разговор
-          </Link>
-        </div>
-      </section>
     </>
   );
 }
