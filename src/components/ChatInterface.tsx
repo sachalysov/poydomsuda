@@ -156,7 +156,7 @@ export default function ChatInterface() {
       )}
 
       {/* Input */}
-      <div className="bg-[#160A0D] border border-[#3D1820] rounded-2xl focus-within:border-rose-700/60 transition-all duration-200">
+      <div className="flex items-center gap-2 bg-[#160A0D] border border-[#3D1820] rounded-2xl px-4 py-2 focus-within:border-rose-700/60 transition-all duration-200">
         <textarea
           ref={inputRef}
           value={input}
@@ -164,19 +164,28 @@ export default function ChatInterface() {
           onKeyDown={handleKeyDown}
           placeholder="Напишите что ищете... (Enter для отправки)"
           rows={2}
-          className="w-full px-4 pt-4 pb-2 text-sm text-rose-100 placeholder:text-[#7A3040] bg-transparent resize-none outline-none"
+          className="flex-1 min-w-0 py-2 text-sm text-rose-100 placeholder:text-[#7A3040] bg-transparent resize-none outline-none"
         />
-        <div className="flex items-center justify-between px-4 pb-3">
-          <span className="text-xs text-[#7A3040]">Shift+Enter для переноса строки</span>
-          <button
-            onClick={() => sendMessage(input)}
-            disabled={!input.trim() || loading}
-            className="inline-flex items-center gap-1.5 bg-rose-600 hover:bg-rose-500 disabled:opacity-30 disabled:cursor-not-allowed text-white font-semibold text-sm px-5 py-2 rounded-xl transition-all duration-200"
+        <button
+          onClick={() => sendMessage(input)}
+          disabled={!input.trim() || loading}
+          aria-label="Отправить"
+          className="flex-shrink-0 inline-flex items-center justify-center w-11 h-11 bg-rose-600 hover:bg-rose-500 disabled:opacity-30 disabled:cursor-not-allowed text-white rounded-xl transition-all duration-200"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2.5}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-5 h-5"
           >
-            <span>Отправить</span>
-            <span>→</span>
-          </button>
-        </div>
+            <path d="M12 19V5" />
+            <path d="M5 12l7-7 7 7" />
+          </svg>
+        </button>
       </div>
     </div>
   );

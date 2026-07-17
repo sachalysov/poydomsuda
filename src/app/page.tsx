@@ -9,21 +9,6 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://poydomsuda.ru" },
 };
 
-const features = [
-  {
-    title: "AI-помощник",
-    desc: "Опишите своё настроение, бюджет и компанию — и получите персональные рекомендации за секунды.",
-  },
-  {
-    title: "Блог о досуге",
-    desc: "Редакционные статьи о лучших местах, маршрутах и событиях города — от музеев до уличных фестивалей.",
-  },
-  {
-    title: "Только Петербург",
-    desc: "Фокусируемся на одном городе, чтобы давать актуальные и точные советы без воды.",
-  },
-];
-
 const howItWorks = [
   {
     step: "1",
@@ -59,18 +44,18 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,#0D0608_0%,transparent_18%,transparent_82%,#0D0608_100%)]" />
 
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
-          <div className="inline-flex items-center gap-2 bg-rose-600/10 border border-rose-500/20 text-rose-400 text-sm font-medium px-4 py-1.5 rounded-full mb-6 animate-fade-in-up">
+          <div className="inline-flex items-center gap-2 bg-rose-600/10 border border-rose-500/20 text-rose-400 text-sm font-medium px-4 py-1.5 rounded-full mb-6 animate-fade-in-up text-shadow-soft">
             Санкт-Петербург
           </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-rose-100 leading-tight mb-6 animate-fade-in-up delay-100">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-rose-100 leading-tight mb-6 animate-fade-in-up delay-100 text-shadow-soft">
             Найди, куда <br className="hidden sm:block" />
             <span className="text-rose-400">сходить сегодня</span>
           </h1>
 
-          <p className="text-lg sm:text-xl text-[#C8828A] max-w-2xl mb-10 leading-relaxed animate-fade-in-up delay-200">
-            Сервис для поиска досуга в Петербурге. Пообщайтесь с AI-помощником, который подберёт
-            лучшие места, маршруты и события — специально для вас.
+          <p className="text-lg sm:text-xl text-[#C8828A] max-w-2xl mb-10 leading-relaxed animate-fade-in-up delay-200 text-shadow-soft">
+             AI-помощник, который подберёт
+            лучшие места специально для вас.
           </p>
 
           <div className="flex flex-col sm:flex-row items-start justify-start gap-4 animate-fade-in-up delay-300">
@@ -90,43 +75,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Features ── */}
-      <section className="py-20 bg-[#0D0608]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl sm:text-4xl font-bold text-rose-100 text-center mb-3">
-            Что умеет сервис
-          </h2>
-          <p className="text-[#7A3040] text-center mb-12 max-w-lg mx-auto">
-            Всё необходимое для того, чтобы каждые выходные в Петербурге были запоминающимися
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {features.map(({ title, desc }) => (
-              <div
-                key={title}
-                className="bg-[#160A0D] border border-[#3D1820] hover:border-[#5C2530] rounded-2xl p-6 transition-all duration-200 group hover:bg-[#1E0E12]"
-              >
-                <h3 className="text-lg font-bold text-rose-200 mb-2">{title}</h3>
-                <p className="text-[#C8828A] text-sm leading-relaxed">{desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── How it works ── */}
       <section className="relative overflow-hidden py-20 bg-[#0A0507]">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/spb-how-it-works.png')" }}
-        />
-        <div className="absolute inset-0 bg-[#0A0507]/75" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,#0A0507_0%,transparent_18%,transparent_82%,#0A0507_100%)]" />
-
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl sm:text-4xl font-bold text-rose-100 text-center mb-3">
+          <h2 className="text-3xl sm:text-4xl font-bold text-rose-100 text-center mb-3 text-shadow-soft">
             Как это работает
           </h2>
-          <p className="text-[#C8828A] text-center mb-14 max-w-lg mx-auto">
+          <p className="text-[#C8828A] text-center mb-14 max-w-lg mx-auto text-shadow-soft">
             Три шага до идеального досуга в городе
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
@@ -135,8 +90,8 @@ export default function HomePage() {
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-rose-600 text-white font-bold text-lg rounded-full mb-4 shadow-lg shadow-rose-900/60">
                   {step}
                 </div>
-                <h3 className="text-lg font-bold text-rose-200 mb-2">{title}</h3>
-                <p className="text-[#C8828A] text-sm leading-relaxed max-w-xs mx-auto">{desc}</p>
+                <h3 className="text-lg font-bold text-rose-200 mb-2 text-shadow-soft">{title}</h3>
+                <p className="text-[#C8828A] text-sm leading-relaxed max-w-xs mx-auto text-shadow-soft">{desc}</p>
               </div>
             ))}
           </div>
@@ -153,12 +108,19 @@ export default function HomePage() {
       </section>
 
       {/* ── Latest posts ── */}
-      <section className="py-20 bg-[#0D0608]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden py-20 bg-[#0D0608]">
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/spb-how-it-works.png')" }}
+        />
+        <div className="absolute inset-0 bg-[#0D0608]/75" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,#0D0608_0%,transparent_18%,transparent_82%,#0D0608_100%)]" />
+
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-10">
             <div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-rose-100">Из блога</h2>
-              <p className="text-[#7A3040] mt-1">Свежие идеи и маршруты по городу</p>
+              <h2 className="text-3xl sm:text-4xl font-bold text-rose-100 text-shadow-soft">Из блога</h2>
+              <p className="text-[#C8828A] mt-1 text-shadow-soft">Свежие идеи и маршруты по городу</p>
             </div>
             <Link
               href="/blog"
@@ -173,7 +135,7 @@ export default function HomePage() {
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}`}
-                className="group bg-[#160A0D] border border-[#3D1820] hover:border-[#5C2530] rounded-2xl p-5 transition-all duration-200 hover:bg-[#1E0E12]"
+                className="group bg-[#160A0D]/60 backdrop-blur-sm border border-[#3D1820] hover:border-[#5C2530] rounded-2xl p-5 transition-all duration-200 hover:bg-[#1E0E12]/70"
               >
                 <span className="inline-block text-xs font-medium bg-rose-600/10 border border-rose-500/20 text-rose-400 px-2.5 py-1 rounded-full mb-3">
                   {post.category}
