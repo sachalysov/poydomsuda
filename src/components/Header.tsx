@@ -22,6 +22,9 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // The admin panel has its own nav — don't show the public site header there.
+  if (pathname?.startsWith("/admin")) return null;
+
   return (
     <header
       className={`sticky top-0 z-50 relative transition-[background-color,backdrop-filter] duration-300 ${

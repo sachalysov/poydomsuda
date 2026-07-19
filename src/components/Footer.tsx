@@ -1,6 +1,14 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  // The admin panel has its own layout — don't show the public site footer there.
+  if (pathname?.startsWith("/admin")) return null;
+
   return (
     <footer className="bg-[#0A0507] mt-auto">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

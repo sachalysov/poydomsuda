@@ -9,10 +9,14 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://poydomsuda.ru/blog" },
 };
 
+// Posts are managed via the admin panel and stored in Supabase, so the page
+// is rendered dynamically on every request instead of being statically built.
+export const dynamic = "force-dynamic";
+
 const categories = ["Все", "Прогулки", "Культура", "Еда", "Активный отдых", "Развлечения"];
 
-export default function BlogPage() {
-  const posts = getAllPosts();
+export default async function BlogPage() {
+  const posts = await getAllPosts();
 
   return (
     <div className="min-h-screen bg-[#0D0608]">

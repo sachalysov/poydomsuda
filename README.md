@@ -1,5 +1,10 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Блог и админ-панель (Supabase)
+
+Статьи блога хранятся в Supabase и управляются через панель `/admin`. Подробная
+инструкция по настройке — в [`SUPABASE_SETUP.md`](./SUPABASE_SETUP.md).
+
 ## Getting Started
 
 First, run the development server:

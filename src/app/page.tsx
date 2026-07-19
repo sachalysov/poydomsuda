@@ -27,8 +27,11 @@ const howItWorks = [
   },
 ];
 
-export default function HomePage() {
-  const latestPosts = getAllPosts().slice(0, 3);
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
+  const allPosts = await getAllPosts();
+  const latestPosts = allPosts.slice(0, 3);
 
   return (
     <>
