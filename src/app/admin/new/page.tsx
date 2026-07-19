@@ -1,11 +1,5 @@
-import PostForm from "@/app/admin/PostForm";
-import { createPost } from "@/app/admin/actions";
+import { ArticleForm } from "@/components/admin/article-form/ArticleForm";
 
 export default function NewPostPage() {
-  return (
-    <div>
-      <h1 className="text-2xl font-bold text-rose-100 mb-8">Новая статья</h1>
-      <PostForm action={createPost} submitLabel="Опубликовать" />
-    </div>
-  );
+  return <ArticleForm />;
 }

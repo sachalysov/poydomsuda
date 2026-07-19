@@ -1,9 +1,10 @@
 import { defineConfig, globalIgnores } from "eslint/config";
+import nextPlugin from "@next/eslint-plugin-next";
+
+const { flatConfig } = nextPlugin;
 
 const eslintConfig = defineConfig([
-  {
-    extends: ["next/core-web-vitals"],
-  },
+  flatConfig.coreWebVitals,
   globalIgnores([
     ".next/**",
     "out/**",

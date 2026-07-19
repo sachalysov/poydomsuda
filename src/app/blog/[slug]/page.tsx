@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getPostBySlug, getRelatedPosts } from "@/lib/posts";
+import "./article.css";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -16,8 +17,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = await getPostBySlug(slug);
   if (!post) return {};
   return {
-    title: post.title,
-    description: post.description,
+    title: post.seoTitle || post.title,
+    description: post.seoDescription || post.description,
     alternates: { canonical: `https://poydomsuda.ru/blog/${slug}` },
   };
 }
@@ -28,35 +29,24 @@ export default async function PostPage({ params }: Props) {
   if (!post) notFound();
 
   const related = await getRelatedPosts(slug, 3);
-
-  const contentHtml = post.content
-    .split("\n")
-    .map((line) => {
-      if (line.startsWith("## ")) {
-        return `<h2 class="text-2xl font-bold text-rose-200 mt-10 mb-4">${line.slice(3)}</h2>`;
-      }
-      if (line.startsWith("### ")) {
-        return `<h3 class="text-xl font-bold text-rose-300 mt-7 mb-3">${line.slice(4)}</h3>`;
-      }
-      if (line.startsWith("**") && line.endsWith("**")) {
-        return `<p class="font-semibold text-rose-300 my-2">${line.slice(2, -2)}</p>`;
-      }
-      if (line.startsWith("- ")) {
-        return `<li class="ml-4 text-[#C8828A] leading-relaxed list-disc">${line.slice(2)}</li>`;
-      }
-      if (line.startsWith("---")) {
-        return `<hr class="border-[#3D1820] my-8" />`;
-      }
-      if (line.trim() === "") return "";
-      const formatted = line
-        .replace(/\*\*(.+?)\*\*/g, '<strong class="text-rose-300">$1</strong>')
-        .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" class="text-rose-400 underline hover:text-rose-300">$1</a>');
-      return `<p class="text-[#C8828A] leading-relaxed my-3">${formatted}</p>`;
-    })
-    .join("\n");
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.description,
+    image: post.image,
+    datePublished: post.publishedAt,
+    dateModified: post.publishedAt,
+    mainEntityOfPage: `https://poydomsuda.ru/blog/${post.slug}`,
+    publisher: { "@type": "Organization", name: "Пойдём Сюда" },
+  };
 
   return (
     <div className="min-h-screen bg-[#0D0608]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd).replace(/</g, "\\u003c") }}
+      />
 
       {/* Breadcrumb */}
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
@@ -85,7 +75,23 @@ export default async function PostPage({ params }: Props) {
         <p className="text-lg text-[#C8828A] leading-relaxed border-l-4 border-rose-700/50 pl-4">
           {post.description}
         </p>
+        {post.tags.length > 0 && (
+          <div className="flex flex-wrap gap-2 mt-5">
+            {post.tags.map((tag) => (
+              <span key={tag} className="text-xs text-rose-400 bg-rose-600/10 border border-rose-500/20 rounded-full px-2.5 py-1">
+                #{tag}
+              </span>
+            ))}
+          </div>
+        )}
       </header>
+
+      {post.image && (
+        <figure className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={post.image} alt={`Обложка статьи «${post.title}»`} className="w-full h-auto max-h-[32rem] object-cover rounded-2xl" />
+        </figure>
+      )}
 
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <hr className="border-[#3D1820] mb-8" />
@@ -93,7 +99,7 @@ export default async function PostPage({ params }: Props) {
 
       {/* Article body */}
       <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-        <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
+        <div className="article-body" dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
       </article>
 
       {/* Ask AI CTA */}

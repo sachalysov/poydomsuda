@@ -34,6 +34,12 @@ export default async function AdminDashboardPage() {
               key={post.id}
               className="bg-[#160A0D] border border-[#3D1820] rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center gap-4"
             >
+              {post.image && (
+                <div className="w-full sm:w-28 aspect-[16/10] shrink-0 overflow-hidden rounded-xl">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={post.image} alt="" loading="lazy" className="w-full h-full object-cover" />
+                </div>
+              )}
               <div className="flex-1 min-w-0">
                 <div className="flex flex-wrap items-center gap-2 mb-2">
                   <span className="inline-block text-xs font-medium bg-rose-600/10 border border-rose-500/20 text-rose-400 px-2.5 py-1 rounded-full">
@@ -47,6 +53,14 @@ export default async function AdminDashboardPage() {
                 </div>
                 <h2 className="font-bold text-rose-200 leading-snug truncate">{post.title}</h2>
                 <p className="text-xs text-[#7A3040] mt-1">/blog/{post.slug}</p>
+                <div className="flex flex-wrap gap-1.5 mt-2">
+                  {post.tags.slice(0, 4).map((tag) => (
+                    <span key={tag} className="text-[11px] text-[#7A3040]">#{tag}</span>
+                  ))}
+                  <span className="text-[11px] text-[#7A3040]">
+                    {new Date(post.published_at).toLocaleDateString("ru-RU")}
+                  </span>
+                </div>
               </div>
 
               <div className="flex items-center gap-2 shrink-0">

@@ -64,6 +64,12 @@ export default async function BlogPage() {
             className="group block bg-[#160A0D] border border-[#3D1820] hover:border-[#5C2530] rounded-3xl p-6 sm:p-8 transition-all duration-300 mb-8 hover:bg-[#1E0E12]"
           >
             <div className="flex flex-col sm:flex-row gap-6 items-start">
+              {posts[0].image && (
+                <div className="w-full sm:w-64 lg:w-80 shrink-0 overflow-hidden rounded-2xl aspect-[16/10]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={posts[0].image} alt={`Обложка статьи «${posts[0].title}»`} loading="lazy" className="w-full h-full object-cover" />
+                </div>
+              )}
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-3">
                   <span className="inline-block text-xs font-medium bg-rose-600/10 border border-rose-500/20 text-rose-400 px-2.5 py-1 rounded-full">
@@ -97,6 +103,12 @@ export default async function BlogPage() {
               href={`/blog/${post.slug}`}
               className="group bg-[#160A0D] border border-[#3D1820] hover:border-[#5C2530] rounded-2xl p-5 transition-all duration-200 flex flex-col hover:bg-[#1E0E12]"
             >
+              {post.image && (
+                <div className="-mx-5 -mt-5 mb-4 overflow-hidden rounded-t-2xl aspect-[16/9]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={post.image} alt={`Обложка статьи «${post.title}»`} loading="lazy" className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform" />
+                </div>
+              )}
               <span className="inline-block text-xs font-medium bg-rose-600/10 border border-rose-500/20 text-rose-400 px-2.5 py-1 rounded-full mb-3 self-start">
                 {post.category}
               </span>

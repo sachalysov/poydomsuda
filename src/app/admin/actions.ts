@@ -4,108 +4,91 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { slugify } from "@/lib/slugify";
+import type { ArticleEditorData, SaveArticleResult } from "@/lib/article-types";
+import { calculateReadTime, sanitizeArticleHtml } from "@/lib/article-content";
 
-export type ActionState = { error?: string } | undefined;
-
-function computeReadTime(content: string): string {
-  const words = content.trim().split(/\s+/).filter(Boolean).length;
-  const minutes = Math.max(1, Math.round(words / 200));
-  return `${minutes} мин`;
+function validateArticle(article: ArticleEditorData): string | null {
+  if (!article.contentJson || article.contentJson.type !== "doc") return "Некорректный формат документа.";
+  if (article.status === "published") {
+    if (!article.title.trim()) return "Укажите название статьи.";
+    if (!article.description.trim()) return "Укажите краткое описание.";
+    if (!article.category.trim()) return "Выберите категорию.";
+    if (!article.contentJson.content?.length) return "Добавьте текст статьи.";
+  }
+  if (article.seoTitle.length > 60) return "SEO title должен быть не длиннее 60 символов.";
+  if (article.seoDescription.length > 160) return "SEO description должно быть не длиннее 160 символов.";
+  return null;
 }
 
-interface PostInput {
-  title: string;
-  slug: string;
-  category: string;
-  description: string;
-  content: string;
-  image: string | null;
-  published: boolean;
-  read_time: string;
-}
+export async function saveArticle(article: ArticleEditorData): Promise<SaveArticleResult> {
+  const validationError = validateArticle(article);
+  if (validationError) return { ok: false, error: validationError };
 
-function extractPostInput(formData: FormData): { data: PostInput } | { error: string } {
-  const title = String(formData.get("title") ?? "").trim();
-  const slugRaw = String(formData.get("slug") ?? "").trim();
-  const category = String(formData.get("category") ?? "").trim();
-  const description = String(formData.get("description") ?? "").trim();
-  const content = String(formData.get("content") ?? "").trim();
-  const image = String(formData.get("image") ?? "").trim();
-  const published = formData.get("published") === "on";
+  const supabase = await createClient();
+  const { data: auth } = await supabase.auth.getUser();
+  if (!auth.user) return { ok: false, error: "Сессия истекла. Войдите снова." };
 
-  if (!title || !category || !description || !content) {
-    return { error: "Заполните все обязательные поля." };
+  const generatedSlug = slugify(article.slug || article.title);
+  const slug = generatedSlug || `draft-${crypto.randomUUID().slice(0, 8)}`;
+  const title = article.title.trim() || "Без названия";
+  const html = sanitizeArticleHtml(article.contentHtml);
+  const publishedAt = article.publishedAt
+    ? new Date(article.publishedAt).toISOString()
+    : new Date().toISOString();
+  const row = {
+    title,
+    slug,
+    description: article.description.trim(),
+    category: article.category.trim() || "Без категории",
+    content: html,
+    content_json: article.contentJson,
+    content_html: html,
+    image: article.image.trim() || null,
+    tags: article.tags.map((tag) => tag.trim()).filter(Boolean).slice(0, 20),
+    seo_title: article.seoTitle.trim() || null,
+    seo_description: article.seoDescription.trim() || null,
+    published: article.status === "published",
+    published_at: publishedAt,
+    read_time: calculateReadTime(article.contentJson),
+  };
+
+  let oldSlug: string | null = null;
+  let result;
+  if (article.id) {
+    const previous = await supabase.from("posts").select("slug").eq("id", article.id).maybeSingle();
+    oldSlug = previous.data?.slug ?? null;
+    result = await supabase.from("posts").update(row).eq("id", article.id).select("id, slug").single();
+  } else {
+    result = await supabase.from("posts").insert(row).select("id, slug").single();
   }
 
-  const slug = slugify(slugRaw || title);
-  if (!slug) {
-    return { error: "Не удалось сформировать корректный URL (slug) из заголовка." };
+  if (result.error) {
+    return {
+      ok: false,
+      error: result.error.code === "23505"
+        ? "Статья с таким URL (slug) уже существует."
+        : result.error.message,
+    };
   }
+
+  revalidatePath("/");
+  revalidatePath("/blog");
+  revalidatePath("/admin");
+  revalidatePath(`/blog/${result.data.slug}`);
+  if (oldSlug && oldSlug !== result.data.slug) revalidatePath(`/blog/${oldSlug}`);
 
   return {
-    data: {
-      title,
-      slug,
-      category,
-      description,
-      content,
-      image: image || null,
-      published,
-      read_time: computeReadTime(content),
-    },
+    ok: true,
+    id: result.data.id,
+    slug: result.data.slug,
+    savedAt: new Date().toISOString(),
   };
-}
-
-export async function createPost(
-  _prevState: ActionState,
-  formData: FormData
-): Promise<ActionState> {
-  const parsed = extractPostInput(formData);
-  if ("error" in parsed) return { error: parsed.error };
-
-  const supabase = await createClient();
-  const { error } = await supabase.from("posts").insert(parsed.data);
-
-  if (error) {
-    if (error.code === "23505") {
-      return { error: "Статья с таким URL (slug) уже существует." };
-    }
-    return { error: error.message };
-  }
-
-  revalidatePath("/blog");
-  revalidatePath(`/blog/${parsed.data.slug}`);
-  revalidatePath("/admin");
-  redirect("/admin");
-}
-
-export async function updatePost(
-  id: string,
-  _prevState: ActionState,
-  formData: FormData
-): Promise<ActionState> {
-  const parsed = extractPostInput(formData);
-  if ("error" in parsed) return { error: parsed.error };
-
-  const supabase = await createClient();
-  const { error } = await supabase.from("posts").update(parsed.data).eq("id", id);
-
-  if (error) {
-    if (error.code === "23505") {
-      return { error: "Статья с таким URL (slug) уже существует." };
-    }
-    return { error: error.message };
-  }
-
-  revalidatePath("/blog");
-  revalidatePath(`/blog/${parsed.data.slug}`);
-  revalidatePath("/admin");
-  redirect("/admin");
 }
 
 export async function deletePost(id: string, slug: string): Promise<void> {
   const supabase = await createClient();
-  await supabase.from("posts").delete().eq("id", id);
+  const { error } = await supabase.from("posts").delete().eq("id", id);
+  if (error) throw new Error(error.message);
 
   revalidatePath("/blog");
   revalidatePath(`/blog/${slug}`);

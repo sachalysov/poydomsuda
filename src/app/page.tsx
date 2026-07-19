@@ -122,7 +122,7 @@ export default async function HomePage() {
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-10">
             <div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-rose-100 text-shadow-soft">Из блога</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold text-rose-100 text-shadow-soft">Блог по местам Санкт-Петербурга</h2>
               <p className="text-[#C8828A] mt-1 text-shadow-soft">Свежие идеи и маршруты по городу</p>
             </div>
             <Link

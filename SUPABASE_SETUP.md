@@ -47,6 +47,20 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=вставьте-anon-public-key-сюда
 `drop ... if exists`, а демо-статьи не задвоятся благодаря
 `on conflict (slug) do nothing`.
 
+### Если таблица posts уже создана раньше
+
+После внедрения Tiptap-редактора нужно один раз выполнить миграцию
+[`supabase/migrate-tiptap.sql`](./supabase/migrate-tiptap.sql):
+
+1. Supabase → **SQL Editor → New query**
+2. Вставьте содержимое `migrate-tiptap.sql`
+3. Нажмите **Run**
+
+Это добавит колонки `content_json`, `content_html`, `tags`, `seo_title`,
+`seo_description` и создаст bucket `article-images` для загрузки картинок.
+Без этого шага блог/админка могут писать в консоль
+`column posts.content_json does not exist`.
+
 ## 5. Понизьте минимальную длину пароля (важно!)
 
 По умолчанию Supabase Auth требует пароль **не короче 6 символов**. Пароль
