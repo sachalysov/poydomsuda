@@ -61,6 +61,20 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=вставьте-anon-public-key-сюда
 Без этого шага блог/админка могут писать в консоль
 `column posts.content_json does not exist`.
 
+### Если обложка не загружается («Bucket not found»)
+
+В Supabase ещё нет Storage-bucket для картинок. Выполните отдельно
+[`supabase/setup-storage.sql`](./supabase/setup-storage.sql):
+
+1. Supabase → **SQL Editor → New query**
+2. Вставьте содержимое `setup-storage.sql`
+3. Нажмите **Run**
+
+После этого перезагрузите админку и снова загрузите обложку.
+Либо создайте bucket вручную: **Storage → New bucket** → имя
+`article-images` → включите **Public bucket**, а политики всё равно
+нужно взять из `setup-storage.sql`.
+
 ## 5. Понизьте минимальную длину пароля (важно!)
 
 По умолчанию Supabase Auth требует пароль **не короче 6 символов**. Пароль
