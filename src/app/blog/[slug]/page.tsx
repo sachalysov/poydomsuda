@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { BackButton } from "@/components/blog/BackButton";
 import { getPostBySlug, getRelatedPosts } from "@/lib/posts";
 import "./article.css";
 
@@ -48,9 +49,10 @@ export default async function PostPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd).replace(/</g, "\\u003c") }}
       />
 
-      {/* Breadcrumb */}
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-        <nav className="flex items-center gap-2 text-sm text-[#7A3040]">
+      {/* Back + breadcrumb */}
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-3">
+        <BackButton />
+        <nav className="flex items-center gap-2 text-sm text-[#7A3040]" aria-label="Хлебные крошки">
           <Link href="/" className="hover:text-rose-400 transition-colors">Главная</Link>
           <span>/</span>
           <Link href="/blog" className="hover:text-rose-400 transition-colors">Блог</Link>
