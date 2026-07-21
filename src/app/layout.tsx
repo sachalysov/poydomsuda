@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     template: "%s | Пойдём Сюда",
   },
   description:
-    "Сервис для поиска идей досуга в Санкт-Петербурге.",
+    "Сервис для поиска идей досуга в Санкт-Петербурге. Ђ",
   alternates: { canonical: "https://poydomsuda.ru" },
   robots: { index: true, follow: true },
 };

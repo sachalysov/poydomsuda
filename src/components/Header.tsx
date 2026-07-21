@@ -36,10 +36,14 @@ export default function Header() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <span className="font-bold text-xl text-rose-200 group-hover:text-rose-100 transition-colors">
-              Пойдём Сюда
-            </span>
+          <Link href="/" className="flex items-center group shrink-0 py-1">
+            <img
+              src="/logo.png"
+              alt="Пойдём Сюда"
+              width={84}
+              height={56}
+              className="h-10 sm:h-12 w-auto transition-opacity group-hover:opacity-90"
+            />
           </Link>
 
           {/* Desktop nav */}
