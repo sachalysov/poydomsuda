@@ -17,7 +17,13 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="mb-3">
-              <span className="font-bold text-lg text-rose-200">Пойдём Сюда</span>
+              <img
+                src="/logo-footer.png"
+                alt="Пойдём Сюда"
+                width={84}
+                height={56}
+                className="h-10 sm:h-12 w-auto object-contain object-left"
+              />
             </div>
             <p className="text-sm text-[#7A3040] leading-relaxed">
               Помогаем жителям и гостям Санкт-Петербурга находить лучшие места для отдыха и развлечений.
