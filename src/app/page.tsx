@@ -5,7 +5,7 @@ import { getAllPosts } from "@/lib/posts";
 export const metadata: Metadata = {
   title: "Пойдём Сюда — куда сходить в Санкт-Петербурге",
   description:
-    "Сервис для поиска идей досуга в Санкт-Петербурге. Спросите AI-помощника куда сходить, что посетить и как интересно провести время в городе.",
+    "Сервис для поиска идей досуга в Санкт-Петербурге.",
   alternates: { canonical: "https://poydomsuda.ru" },
 };
 

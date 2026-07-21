@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     template: "%s | Пойдём Сюда",
   },
   description:
-    "Сервис для поиска идей досуга в Санкт-Петербурге. Спросите AI-помощника куда сходить, что посетить и как интересно провести время в городе.",
+    "Сервис для поиска идей досуга в Санкт-Петербурге.",
   alternates: { canonical: "https://poydomsuda.ru" },
   robots: { index: true, follow: true },
 };
