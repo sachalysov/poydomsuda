@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import ChatMarkdown from "@/components/ChatMarkdown";
 
 interface Message {
   id: string;
@@ -127,13 +128,13 @@ export default function ChatInterface() {
               </div>
             )}
             <div
-              className={`max-w-[80%] px-4 py-3 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${
+              className={`max-w-[80%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
                 msg.role === "user"
-                  ? "bg-rose-600 text-white rounded-br-sm font-medium"
+                  ? "bg-rose-600 text-white rounded-br-sm font-medium whitespace-pre-wrap"
                   : "bg-bg-raised border border-border text-text-body rounded-bl-sm"
               }`}
             >
-              {msg.text}
+              {msg.role === "assistant" ? <ChatMarkdown content={msg.text} /> : msg.text}
             </div>
             {msg.role === "user" && (
               <div className="w-8 h-8 rounded-full bg-bg-card border border-border flex items-center justify-center text-xs font-semibold text-text-body flex-shrink-0 mt-1">
