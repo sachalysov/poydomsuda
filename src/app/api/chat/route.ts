@@ -1,6 +1,15 @@
 import { NextResponse } from "next/server";
 
-const WEBHOOK_URL = process.env.N8N_CHAT_WEBHOOK_URL;
+/** Always evaluate at request time — avoids build-time empty env on App Platform. */
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
+function getWebhookUrl(): string | undefined {
+  // Bracket access + trim: not inlined as undefined during `next build`
+  const raw = process.env["N8N_CHAT_WEBHOOK_URL"];
+  const url = typeof raw === "string" ? raw.trim() : "";
+  return url || undefined;
+}
 
 function extractReply(data: unknown): string | null {
   if (!data) return null;
@@ -26,7 +35,10 @@ function extractReply(data: unknown): string | null {
 }
 
 export async function POST(request: Request) {
-  if (!WEBHOOK_URL) {
+  const webhookUrl = getWebhookUrl();
+
+  if (!webhookUrl) {
+    console.error("[chat] N8N_CHAT_WEBHOOK_URL is missing at runtime");
     return NextResponse.json(
       { error: "Чат временно недоступен: вебхук не настроен." },
       { status: 503 },
@@ -51,7 +63,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const upstream = await fetch(WEBHOOK_URL, {
+    const upstream = await fetch(webhookUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
