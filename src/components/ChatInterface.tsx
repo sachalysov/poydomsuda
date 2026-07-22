@@ -17,10 +17,22 @@ const suggestions = [
   "Недорогие кафе в центре",
 ];
 
-const WEBHOOK_URL = ""; // Подключите ваш вебхук здесь
+const SESSION_KEY = "poydomsuda-chat-session";
 
 const botPlaceholder =
   "Привет! Я помогу найти идеальный досуг в Санкт-Петербурге. Расскажите — с кем идёте, какой у вас бюджет и что вам нравится? Или выберите один из вариантов ниже.";
+
+function getOrCreateSessionId(): string {
+  try {
+    const existing = sessionStorage.getItem(SESSION_KEY);
+    if (existing) return existing;
+    const id = crypto.randomUUID();
+    sessionStorage.setItem(SESSION_KEY, id);
+    return id;
+  } catch {
+    return crypto.randomUUID();
+  }
+}
 
 export default function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([
@@ -28,8 +40,13 @@ export default function ChatInterface() {
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [sessionId, setSessionId] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    setSessionId(getOrCreateSessionId());
+  }, []);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -38,35 +55,42 @@ export default function ChatInterface() {
   const sendMessage = async (text: string) => {
     if (!text.trim() || loading) return;
 
-    const userMsg: Message = { id: Date.now().toString(), role: "user", text: text.trim() };
+    const trimmed = text.trim();
+    const userMsg: Message = { id: Date.now().toString(), role: "user", text: trimmed };
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
     setLoading(true);
 
+    const activeSessionId = sessionId || getOrCreateSessionId();
+    if (!sessionId) setSessionId(activeSessionId);
+
     try {
-      if (WEBHOOK_URL) {
-        const res = await fetch(WEBHOOK_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: text.trim() }),
-        });
-        const data = await res.json();
-        const botText = data.response || data.text || data.message || "Спасибо за вопрос! Скоро я смогу полноценно ответить.";
-        setMessages((prev) => [
-          ...prev,
-          { id: (Date.now() + 1).toString(), role: "assistant", text: botText },
-        ]);
-      } else {
-        await new Promise((r) => setTimeout(r, 800));
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: (Date.now() + 1).toString(),
-            role: "assistant",
-            text: `Отличный вопрос! Я получил ваше сообщение: «${text.trim()}». \n\nПока вебхук с нейросетью не подключён — но скоро я смогу давать полноценные персональные рекомендации по досугу в Санкт-Петербурге. Пока загляните в наш блог — там много интересных идей.`,
-          },
-        ]);
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: trimmed, sessionId: activeSessionId }),
+      });
+
+      const data = (await res.json()) as { reply?: string; error?: string; sessionId?: string };
+
+      if (data.sessionId && data.sessionId !== activeSessionId) {
+        setSessionId(data.sessionId);
+        try {
+          sessionStorage.setItem(SESSION_KEY, data.sessionId);
+        } catch {
+          /* ignore */
+        }
       }
+
+      const botText =
+        res.ok && data.reply
+          ? data.reply
+          : data.error || "Упс, что-то пошло не так. Попробуйте ещё раз чуть позже!";
+
+      setMessages((prev) => [
+        ...prev,
+        { id: (Date.now() + 1).toString(), role: "assistant", text: botText },
+      ]);
     } catch {
       setMessages((prev) => [
         ...prev,
