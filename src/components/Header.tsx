@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import ThemeToggle from "@/components/theme/ThemeToggle";
 
 const navLinks = [
   { href: "/", label: "Главная" },
@@ -29,20 +30,29 @@ export default function Header() {
     <header
       className={`sticky top-0 z-50 relative transition-[background-color,backdrop-filter] duration-300 ${
         scrolled
-          ? "bg-[#0D0608]/20 backdrop-blur-md"
-          : "bg-[#0D0608]/15 backdrop-blur-sm"
+          ? "bg-bg-base/70 backdrop-blur-md"
+          : "bg-bg-base/40 backdrop-blur-sm"
       }`}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 gap-2">
           {/* Logo */}
           <Link href="/" className="flex items-center group shrink-0 py-1">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logo-light.png"
+              alt="Пойдём Сюда"
+              width={84}
+              height={56}
+              className="h-10 sm:h-12 w-auto transition-opacity group-hover:opacity-90 dark:hidden"
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/logo.png"
               alt="Пойдём Сюда"
               width={84}
               height={56}
-              className="h-10 sm:h-12 w-auto transition-opacity group-hover:opacity-90"
+              className="h-10 sm:h-12 w-auto transition-opacity group-hover:opacity-90 hidden dark:block"
             />
           </Link>
 
@@ -54,8 +64,8 @@ export default function Header() {
                 href={href}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                   pathname === href
-                    ? "bg-rose-600/20 text-rose-300 border border-rose-500/30"
-                    : "text-[#C8828A] hover:bg-[#271318] hover:text-rose-200"
+                    ? "bg-rose-600/10 text-rose-700 border border-rose-500/30 dark:bg-rose-600/20 dark:text-rose-300"
+                    : "text-text-body hover:bg-bg-hover hover:text-rose-800 dark:hover:text-rose-200"
                 }`}
               >
                 {label}
@@ -63,33 +73,38 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* CTA button */}
-          <Link
-            href="/chat"
-            className="hidden md:inline-flex items-center gap-2 bg-rose-600 hover:bg-rose-500 text-white font-semibold text-sm px-5 py-2.5 rounded-full transition-all duration-200 shadow-lg shadow-rose-900/50"
-          >
-            Найти досуг
-          </Link>
+          <div className="hidden md:flex items-center gap-2">
+            <ThemeToggle />
+            <Link
+              href="/chat"
+              className="inline-flex items-center gap-2 bg-rose-600 hover:bg-rose-500 text-white font-semibold text-sm px-5 py-2.5 rounded-full transition-all duration-200 shadow-lg shadow-rose-900/20 dark:shadow-rose-900/50"
+            >
+              Найти досуг
+            </Link>
+          </div>
 
-          {/* Mobile burger */}
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden p-2 rounded-lg text-rose-400 hover:bg-[#271318] transition-colors"
-            aria-label="Открыть меню"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {menuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
+          {/* Mobile: theme + burger */}
+          <div className="flex md:hidden items-center gap-1">
+            <ThemeToggle />
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="p-2 min-w-11 min-h-11 rounded-lg text-rose-600 dark:text-rose-400 hover:bg-bg-hover transition-colors"
+              aria-label="Открыть меню"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {menuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+          </div>
         </div>
 
         {/* Mobile menu */}
         {menuOpen && (
-          <nav className="md:hidden pb-4 flex flex-col gap-1 border-t border-[#3D1820] mt-2 pt-3">
+          <nav className="md:hidden pb-4 flex flex-col gap-1 border-t border-border mt-2 pt-3">
             {navLinks.map(({ href, label }) => (
               <Link
                 key={href}
@@ -97,8 +112,8 @@ export default function Header() {
                 onClick={() => setMenuOpen(false)}
                 className={`px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
                   pathname === href
-                    ? "bg-rose-600/20 text-rose-300 border border-rose-500/30"
-                    : "text-[#C8828A] hover:bg-[#271318] hover:text-rose-200"
+                    ? "bg-rose-600/10 text-rose-700 border border-rose-500/30 dark:bg-rose-600/20 dark:text-rose-300"
+                    : "text-text-body hover:bg-bg-hover hover:text-rose-800 dark:hover:text-rose-200"
                 }`}
               >
                 {label}
@@ -118,7 +133,7 @@ export default function Header() {
       {/* Soft fade into page content */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-full h-10 bg-gradient-to-b from-[#0D0608]/40 via-[#0D0608]/15 to-transparent"
+        className="pointer-events-none absolute inset-x-0 top-full h-10 bg-gradient-to-b from-bg-base/40 via-bg-base/15 to-transparent"
       />
     </header>
   );

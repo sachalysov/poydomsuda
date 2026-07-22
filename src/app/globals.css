@@ -1,7 +1,34 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Light theme (default :root) */
 :root {
+  --bg-base:    #FFF7F8;
+  --bg-deep:    #FCE8EC;
+  --bg-raised:  #FFFFFF;
+  --bg-card:    #FFF1F3;
+  --bg-hover:   #FFE4E8;
+  --border:     #FECDD3;
+  --border-md:  #FDA4AF;
+  --text-head:  #4C0519;
+  --text-body:  #9F1239;
+  --text-muted: #BE123C;
+  --text-soft:  #881337;
+  --overlay:    #FFF7F8;
+  --accent:     #E11D48;
+  --accent-hov: #F43F5E;
+  --code-bg:    #FFE4E8;
+  --code-text:  #881337;
+  --pre-bg:     #FFF1F3;
+  --glow-a:     rgba(225, 29, 72, 0.12);
+  --glow-b:     rgba(225, 29, 72, 0.22);
+}
+
+/* Dark theme — current brand palette */
+html.dark {
   --bg-base:    #0D0608;
+  --bg-deep:    #0A0507;
   --bg-raised:  #160A0D;
   --bg-card:    #1E0E12;
   --bg-hover:   #271318;
@@ -10,12 +37,33 @@
   --text-head:  #FFE4E8;
   --text-body:  #C8828A;
   --text-muted: #7A3040;
+  --text-soft:  #FDA4AF;
+  --overlay:    #0D0608;
   --accent:     #E11D48;
   --accent-hov: #F43F5E;
+  --code-bg:    #271318;
+  --code-text:  #FECDD3;
+  --pre-bg:     #090405;
+  --glow-a:     rgba(225, 29, 72, 0.20);
+  --glow-b:     rgba(225, 29, 72, 0.35);
 }
 
 @theme inline {
   --font-sans: var(--font-geist-sans);
+  --color-bg-base: var(--bg-base);
+  --color-bg-deep: var(--bg-deep);
+  --color-bg-raised: var(--bg-raised);
+  --color-bg-card: var(--bg-card);
+  --color-bg-hover: var(--bg-hover);
+  --color-border: var(--border);
+  --color-border-md: var(--border-md);
+  --color-text-head: var(--text-head);
+  --color-text-body: var(--text-body);
+  --color-text-muted: var(--text-muted);
+  --color-text-soft: var(--text-soft);
+  --color-overlay: var(--overlay);
+  --color-accent: var(--accent);
+  --color-accent-hov: var(--accent-hov);
 }
 
 * {
@@ -44,8 +92,8 @@ body {
 }
 
 @keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 20px 4px rgba(225,29,72,0.20); }
-  50%       { box-shadow: 0 0 40px 10px rgba(225,29,72,0.35); }
+  0%, 100% { box-shadow: 0 0 20px 4px var(--glow-a); }
+  50%       { box-shadow: 0 0 40px 10px var(--glow-b); }
 }
 
 .animate-fade-in-up { animation: fadeInUp 0.6s ease-out forwards; }
@@ -56,3 +104,11 @@ body {
 .delay-200 { animation-delay: 0.2s; }
 .delay-300 { animation-delay: 0.3s; }
 .delay-400 { animation-delay: 0.4s; }
+
+.text-shadow-soft {
+  text-shadow: 0 1px 2px color-mix(in srgb, var(--overlay) 40%, transparent);
+}
+
+html.dark .text-shadow-soft {
+  text-shadow: 0 1px 8px rgba(13, 6, 8, 0.55);
+}

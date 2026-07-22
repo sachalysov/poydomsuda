@@ -98,7 +98,7 @@ export default function ChatInterface() {
             className={`flex gap-3 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
           >
             {msg.role === "assistant" && (
-              <div className="w-8 h-8 rounded-full bg-rose-600/20 border border-rose-500/30 flex items-center justify-center text-xs font-semibold text-rose-400 flex-shrink-0 mt-1">
+              <div className="w-8 h-8 rounded-full bg-rose-600/20 border border-rose-500/30 flex items-center justify-center text-xs font-semibold text-rose-700 dark:text-rose-400 flex-shrink-0 mt-1">
                 AI
               </div>
             )}
@@ -106,13 +106,13 @@ export default function ChatInterface() {
               className={`max-w-[80%] px-4 py-3 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${
                 msg.role === "user"
                   ? "bg-rose-600 text-white rounded-br-sm font-medium"
-                  : "bg-[#160A0D] border border-[#3D1820] text-[#C8828A] rounded-bl-sm"
+                  : "bg-bg-raised border border-border text-text-body rounded-bl-sm"
               }`}
             >
               {msg.text}
             </div>
             {msg.role === "user" && (
-              <div className="w-8 h-8 rounded-full bg-[#1E0E12] border border-[#3D1820] flex items-center justify-center text-xs font-semibold text-[#C8828A] flex-shrink-0 mt-1">
+              <div className="w-8 h-8 rounded-full bg-bg-card border border-border flex items-center justify-center text-xs font-semibold text-text-body flex-shrink-0 mt-1">
                 Вы
               </div>
             )}
@@ -121,10 +121,10 @@ export default function ChatInterface() {
 
         {loading && (
           <div className="flex gap-3 justify-start">
-            <div className="w-8 h-8 rounded-full bg-rose-600/20 border border-rose-500/30 flex items-center justify-center text-xs font-semibold text-rose-400 flex-shrink-0 mt-1">
+            <div className="w-8 h-8 rounded-full bg-rose-600/20 border border-rose-500/30 flex items-center justify-center text-xs font-semibold text-rose-700 dark:text-rose-400 flex-shrink-0 mt-1">
               AI
             </div>
-            <div className="bg-[#160A0D] border border-[#3D1820] px-4 py-3 rounded-2xl rounded-bl-sm">
+            <div className="bg-bg-raised border border-border px-4 py-3 rounded-2xl rounded-bl-sm">
               <div className="flex gap-1.5 items-center h-5">
                 {[0, 1, 2].map((i) => (
                   <span
@@ -147,7 +147,7 @@ export default function ChatInterface() {
             <button
               key={s}
               onClick={() => sendMessage(s)}
-              className="text-xs bg-[#160A0D] border border-[#3D1820] text-[#C8828A] px-3 py-2 rounded-full hover:border-[#5C2530] hover:text-rose-300 transition-colors"
+              className="text-xs bg-bg-raised border border-border text-text-body px-3 py-2 rounded-full hover:border-border-md hover:text-rose-700 dark:hover:text-rose-300 transition-colors"
             >
               {s}
             </button>
@@ -156,7 +156,7 @@ export default function ChatInterface() {
       )}
 
       {/* Input */}
-      <div className="flex items-center gap-2 bg-[#160A0D] border border-[#3D1820] rounded-2xl px-4 py-2 focus-within:border-rose-700/60 transition-all duration-200">
+      <div className="flex items-center gap-2 bg-bg-raised border border-border rounded-2xl px-4 py-2 focus-within:border-rose-700/60 transition-all duration-200">
         <textarea
           ref={inputRef}
           value={input}
@@ -164,7 +164,7 @@ export default function ChatInterface() {
           onKeyDown={handleKeyDown}
           placeholder="Напишите что ищете... (Enter для отправки)"
           rows={2}
-          className="flex-1 min-w-0 py-2 text-sm text-rose-100 placeholder:text-[#7A3040] bg-transparent resize-none outline-none"
+          className="flex-1 min-w-0 py-2 text-sm text-text-head placeholder:text-text-muted bg-transparent resize-none outline-none"
         />
         <button
           onClick={() => sendMessage(input)}
