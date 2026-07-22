@@ -1,88 +1,112 @@
 "use client";
 
-import Markdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import type { Components } from "react-markdown";
+import { useMemo } from "react";
+import { marked } from "marked";
+import sanitizeHtml from "sanitize-html";
 
-const components: Components = {
-  p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
-  strong: ({ children }) => <strong className="font-semibold text-text-head">{children}</strong>,
-  em: ({ children }) => <em className="italic">{children}</em>,
-  ul: ({ children }) => <ul className="mb-2 last:mb-0 list-disc space-y-1 pl-5">{children}</ul>,
-  ol: ({ children }) => <ol className="mb-2 last:mb-0 list-decimal space-y-1 pl-5">{children}</ol>,
-  li: ({ children }) => <li className="leading-relaxed">{children}</li>,
-  a: ({ href, children }) => (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="underline underline-offset-2 text-rose-700 dark:text-rose-300 hover:text-rose-500"
-    >
-      {children}
-    </a>
-  ),
-  h1: ({ children }) => (
-    <h3 className="mb-2 text-base font-semibold text-text-head">{children}</h3>
-  ),
-  h2: ({ children }) => (
-    <h3 className="mb-2 text-base font-semibold text-text-head">{children}</h3>
-  ),
-  h3: ({ children }) => (
-    <h4 className="mb-1.5 text-sm font-semibold text-text-head">{children}</h4>
-  ),
-  h4: ({ children }) => (
-    <h4 className="mb-1.5 text-sm font-semibold text-text-head">{children}</h4>
-  ),
-  blockquote: ({ children }) => (
-    <blockquote className="mb-2 last:mb-0 border-l-2 border-rose-500/40 pl-3 text-text-soft italic">
-      {children}
-    </blockquote>
-  ),
-  code: ({ className, children }) => {
-    const isBlock = Boolean(className);
-    if (isBlock) {
-      return <code className={className}>{children}</code>;
-    }
-    return (
-      <code className="rounded bg-[var(--code-bg)] px-1.5 py-0.5 text-[0.85em] text-[var(--code-text)]">
-        {children}
-      </code>
-    );
-  },
-  pre: ({ children }) => (
-    <pre className="mb-2 last:mb-0 overflow-x-auto rounded-lg bg-[var(--pre-bg)] border border-border p-3 text-xs text-[var(--code-text)]">
-      {children}
-    </pre>
-  ),
-  hr: () => <hr className="my-3 border-border" />,
-  table: ({ children }) => (
-    <div className="mb-2 last:mb-0 overflow-x-auto">
-      <table className="w-full min-w-[240px] border-collapse text-left text-xs">{children}</table>
-    </div>
-  ),
-  thead: ({ children }) => <thead className="border-b border-border">{children}</thead>,
-  th: ({ children }) => (
-    <th className="px-2 py-1.5 font-semibold text-text-head">{children}</th>
-  ),
-  td: ({ children }) => <td className="border-t border-border/60 px-2 py-1.5">{children}</td>,
-};
+marked.setOptions({
+  gfm: true,
+  breaks: true,
+});
 
 function normalizeMarkdown(content: string): string {
-  return content
+  let text = content.trim();
+
+  // Unwrap accidental JSON string payloads from n8n
+  if (
+    (text.startsWith('"') && text.endsWith('"')) ||
+    (text.startsWith("'") && text.endsWith("'"))
+  ) {
+    try {
+      const unwrapped = JSON.parse(text.startsWith("'") ? `"${text.slice(1, -1)}"` : text);
+      if (typeof unwrapped === "string") text = unwrapped;
+    } catch {
+      /* keep original */
+    }
+  }
+
+  return text
     .replace(/\r\n/g, "\n")
-    // n8n sometimes returns literal "\n" instead of real newlines
+    // n8n / LLM sometimes returns literal escape sequences
     .replace(/\\n/g, "\n")
-    .replace(/\\t/g, "\t");
+    .replace(/\\t/g, "\t")
+    .replace(/\\"/g, '"')
+    // Unicode lookalike asterisks/underscores some models emit
+    .replace(/[＊✱∗]/g, "*")
+    .replace(/[＿]/g, "_");
+}
+
+function markdownToSafeHtml(markdown: string): string {
+  const html = marked.parse(normalizeMarkdown(markdown), { async: false }) as string;
+
+  return sanitizeHtml(html, {
+    allowedTags: [
+      "p",
+      "br",
+      "h1",
+      "h2",
+      "h3",
+      "h4",
+      "strong",
+      "em",
+      "del",
+      "ul",
+      "ol",
+      "li",
+      "blockquote",
+      "code",
+      "pre",
+      "hr",
+      "a",
+      "table",
+      "thead",
+      "tbody",
+      "tr",
+      "th",
+      "td",
+    ],
+    allowedAttributes: {
+      a: ["href", "name", "target", "rel"],
+      code: ["class"],
+      th: ["align"],
+      td: ["align"],
+    },
+    allowedSchemes: ["http", "https", "mailto"],
+    transformTags: {
+      a: sanitizeHtml.simpleTransform("a", {
+        target: "_blank",
+        rel: "noopener noreferrer",
+      }),
+      h1: "h3",
+      h2: "h3",
+    },
+  });
 }
 
 export default function ChatMarkdown({ content }: { content: string }) {
-  const markdown = normalizeMarkdown(content);
+  const html = useMemo(() => markdownToSafeHtml(content), [content]);
 
   return (
-    <div className="chat-md break-words">
-      <Markdown remarkPlugins={[remarkGfm]} components={components}>
-        {markdown}
-      </Markdown>
-    </div>
+    <div
+      className="chat-md break-words
+        [&_p]:mb-2 [&_p:last-child]:mb-0
+        [&_strong]:font-semibold [&_strong]:text-text-head
+        [&_em]:italic
+        [&_ul]:mb-2 [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:pl-5 [&_ul:last-child]:mb-0
+        [&_ol]:mb-2 [&_ol]:list-decimal [&_ol]:space-y-1 [&_ol]:pl-5 [&_ol:last-child]:mb-0
+        [&_li]:leading-relaxed
+        [&_a]:underline [&_a]:underline-offset-2 [&_a]:text-rose-700 dark:[&_a]:text-rose-300 hover:[&_a]:text-rose-500
+        [&_h3]:mb-2 [&_h3]:text-base [&_h3]:font-semibold [&_h3]:text-text-head
+        [&_h4]:mb-1.5 [&_h4]:text-sm [&_h4]:font-semibold [&_h4]:text-text-head
+        [&_blockquote]:mb-2 [&_blockquote]:border-l-2 [&_blockquote]:border-rose-500/40 [&_blockquote]:pl-3 [&_blockquote]:italic [&_blockquote]:text-text-soft [&_blockquote:last-child]:mb-0
+        [&_code]:rounded [&_code]:bg-[var(--code-bg)] [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:text-[0.85em] [&_code]:text-[var(--code-text)]
+        [&_pre]:mb-2 [&_pre]:overflow-x-auto [&_pre]:rounded-lg [&_pre]:border [&_pre]:border-border [&_pre]:bg-[var(--pre-bg)] [&_pre]:p-3 [&_pre]:text-xs [&_pre]:text-[var(--code-text)] [&_pre:last-child]:mb-0
+        [&_pre_code]:bg-transparent [&_pre_code]:p-0
+        [&_hr]:my-3 [&_hr]:border-border
+        [&_table]:mb-2 [&_table]:w-full [&_table]:min-w-[240px] [&_table]:border-collapse [&_table]:text-left [&_table]:text-xs
+        [&_th]:px-2 [&_th]:py-1.5 [&_th]:font-semibold [&_th]:text-text-head
+        [&_td]:border-t [&_td]:border-border/60 [&_td]:px-2 [&_td]:py-1.5"
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
   );
 }
