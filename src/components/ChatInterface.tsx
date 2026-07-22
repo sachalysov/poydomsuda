@@ -187,7 +187,7 @@ export default function ChatInterface() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Напишите что ищете... (Enter для отправки)"
+          placeholder="Напишите что ищете..."
           rows={2}
           className="flex-1 min-w-0 py-2 text-sm text-text-head placeholder:text-text-muted bg-transparent resize-none outline-none"
         />
