@@ -29,15 +29,23 @@ export default async function BlogPage() {
 
   return (
     <div className="min-h-screen bg-bg-base">
-      <section className="bg-bg-deep border-b border-border py-14 sm:py-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 bg-rose-600/10 border border-rose-500/20 text-rose-700 dark:text-rose-400 text-sm font-medium px-4 py-1.5 rounded-full mb-5">
+      <section className="relative overflow-hidden border-b border-border py-14 sm:py-20">
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/spb-blog-hero.png')" }}
+          aria-hidden
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-overlay/95 via-overlay/80 to-overlay/50" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,var(--overlay)_0%,transparent_18%,transparent_82%,var(--overlay)_100%)]" />
+
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="inline-flex items-center gap-2 bg-rose-600/10 border border-rose-500/20 text-rose-700 dark:text-rose-400 text-sm font-medium px-4 py-1.5 rounded-full mb-5 text-shadow-soft">
             Блог о досуге
           </div>
-          <h1 className="text-4xl sm:text-5xl font-bold text-text-head mb-4">
+          <h1 className="text-4xl sm:text-5xl font-bold text-text-head mb-4 text-shadow-soft">
             Идеи для Петербурга
           </h1>
-          <p className="text-text-body text-lg max-w-xl mx-auto">
+          <p className="text-text-body text-lg max-w-xl mx-auto text-shadow-soft">
             Маршруты, места, события и советы — всё, чтобы ваш досуг в городе был ярким
           </p>
         </div>
