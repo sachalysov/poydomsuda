@@ -29,7 +29,7 @@ export default async function BlogPage() {
 
   return (
     <div className="min-h-screen bg-bg-base">
-      <section className="relative overflow-hidden border-b border-border py-14 sm:py-20">
+      <section className="relative overflow-hidden py-14 sm:py-20">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: "url('/spb-blog-hero.png')" }}
