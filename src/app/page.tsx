@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { HowItWorksSteps } from "@/components/HowItWorksSteps";
 import { getAllPosts } from "@/lib/posts";
 
 export const metadata: Metadata = {
@@ -87,17 +88,7 @@ export default async function HomePage() {
           <p className="text-text-body text-center mb-14 max-w-lg mx-auto text-shadow-soft">
             Три шага до идеального досуга в городе
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            {howItWorks.map(({ step, title, desc }) => (
-              <div key={step} className="relative text-center">
-                <div className="inline-flex items-center justify-center w-12 h-12 bg-rose-600 text-white font-bold text-lg rounded-full mb-4 shadow-lg shadow-rose-900/30 dark:shadow-rose-900/60">
-                  {step}
-                </div>
-                <h3 className="text-lg font-bold text-text-soft mb-2 text-shadow-soft">{title}</h3>
-                <p className="text-text-body text-sm leading-relaxed max-w-xs mx-auto text-shadow-soft">{desc}</p>
-              </div>
-            ))}
-          </div>
+          <HowItWorksSteps steps={howItWorks} />
 
           <div className="text-center mt-12">
             <Link
